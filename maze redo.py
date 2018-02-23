@@ -10,7 +10,7 @@ pygame.init()
 WIDTH = 800
 HEIGHT = 600
 SIZE = (WIDTH, HEIGHT)
-TITLE = "Cat Chase Race"
+TITLE = "Maze"
 screen = pygame.display.set_mode(SIZE)
 pygame.display.set_caption(TITLE)
 
@@ -26,27 +26,19 @@ BLACK = (0, 0, 0)
 YELLOW = (255, 255, 0)
 GREEN = (0, 255, 0)
 
-#images
-player1 = pygame.image.load('maze cat-1.png')
-
 
 # Make a player
-loc1 = [200, 150]
+player1 =  [200, 150, 25, 25]
 vel1 = [0, 0]
 player1_speed = 5
-
-def cat1(loc1):  
-    x = loc1[0]
-    y = loc1[1]
-
-    screen.blit(player1, (x, y))
 
 # make walls
 wall1 =  [300, 275, 200, 25]
 wall2 =  [400, 450, 200, 25]
 wall3 =  [100, 100, 25, 200]
+wall4 =  [200, 500, 500, 80]
 
-walls = [wall1, wall2, wall3]
+walls = [wall1, wall2, wall3, wall4]
 
 # Make coins
 coin1 = [300, 500, 25, 25]
@@ -91,8 +83,7 @@ while not done:
         
     # Game logic (Check for collisions, update points, etc.)
     ''' move the player in horizontal direction '''
-    loc1[0] += vel1[0]
-    loc1[1] += vel1[1]
+    player1[0] += vel1[0]
 
     ''' resolve collisions horizontally '''
     for w in walls:
@@ -125,11 +116,11 @@ while not done:
     if len(coins) == 0:
         win = True
 
-    
+        
     # Drawing code (Describe the picture. It isn't actually drawn yet.)
     screen.fill(BLACK)
 
-    cat1(loc1)
+    pygame.draw.rect(screen, WHITE, player1)
     
     for w in walls:
         pygame.draw.rect(screen, RED, w)
