@@ -23,7 +23,7 @@ RED = (255, 0, 0)
 WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
 
-    
+
 # Make a block
 block =  [200, 150, 50, 50]
 vel = [0, 0]

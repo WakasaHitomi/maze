@@ -2,6 +2,9 @@
 import pygame
 import intersects
 
+
+
+
 # Initialize game engine
 pygame.init()
 
@@ -30,13 +33,17 @@ GREEN = (0, 255, 0)
 # Make a player
 player1 =  [200, 150, 25, 25]
 vel1 = [0, 0]
-player1_speed = 5
+player1_speed = 8
+
+player2 = [300, 150, 25, 25]
+vel2 = [0, 0]
+player2_speed = 8
 
 # make walls
 wall1 =  [300, 275, 200, 25]
-wall2 =  [400, 450, 200, 25]
+wall2 =  [400, 435, 200, 25]
 wall3 =  [100, 100, 25, 200]
-wall4 =  [200, 500, 500, 80]
+wall4 =  [75, 495, 200, 80]
 
 walls = [wall1, wall2, wall3, wall4]
 
@@ -61,21 +68,21 @@ while not done:
 
     pressed = pygame.key.get_pressed()
 
-    up = pressed[pygame.K_UP]
-    down = pressed[pygame.K_DOWN]
-    left = pressed[pygame.K_LEFT]
-    right = pressed[pygame.K_RIGHT]
+    up1 = pressed[pygame.K_UP]
+    down1 = pressed[pygame.K_DOWN]
+    left1 = pressed[pygame.K_LEFT]
+    right1 = pressed[pygame.K_RIGHT]
 
-    if left:
+    if left1:
         vel1[0] = -player1_speed
-    elif right:
+    elif right1:
         vel1[0] = player1_speed
     else:
         vel1[0] = 0
 
-    if up:
+    if up1:
         vel1[1] = -player1_speed
-    elif down:
+    elif down1:
         vel1[1] = player1_speed
     else:
         vel1[1] = 0
@@ -84,6 +91,7 @@ while not done:
     # Game logic (Check for collisions, update points, etc.)
     ''' move the player in horizontal direction '''
     player1[0] += vel1[0]
+    player2[0] += vel2[0]
 
     ''' resolve collisions horizontally '''
     for w in walls:
@@ -105,7 +113,23 @@ while not done:
                 player1[1] = w[1] + w[3]
 
 
-    ''' here is where you should resolve player collisions with screen edges '''
+    #''' here is where you should resolve player collisions with screen edges '''
+    ''' get block edges (makes collision resolution easier to read) '''
+    left = player1[0]
+    right = player1[0] + player1[2]
+    top = player1[1]
+    bottom = player1[1] + player1[3]
+
+    ''' if the block is moved completely off of the window, reposition it on the other side '''
+    if left > WIDTH:
+        player1[0] = 0 - player1[2]
+    elif right < 0:
+        player1[0] = WIDTH
+        
+    if bottom < 0:
+        player1[1] = HEIGHT
+    elif top > HEIGHT:
+        player1[1] = 0 - player1[3]
 
 
 
