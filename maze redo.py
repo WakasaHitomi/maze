@@ -4,16 +4,15 @@ import intersects
 
 
 
-
 # Initialize game engine
 pygame.init()
 
 
 # Window
-WIDTH = 800
-HEIGHT = 600
+WIDTH = 1600
+HEIGHT = 900
 SIZE = (WIDTH, HEIGHT)
-TITLE = "Maze"
+TITLE = "Cat Escape"
 screen = pygame.display.set_mode(SIZE)
 pygame.display.set_caption(TITLE)
 
@@ -34,6 +33,10 @@ GREEN = (0, 255, 0)
 cat1 = pygame.image.load('maze cat-1.png')
 
 # Make a player
+player1 = [10, 850]
+vel1 = [0, 0]
+player1_speed = 8
+score = 0
 
 def cat_player(loc1):
     x = player1[0]
@@ -41,15 +44,13 @@ def cat_player(loc1):
 
     screen.blit(cat1, (x, y))
     
-player1 = cat_player
-vel1 = [0, 0]
-player1_speed = 8
 
 
 
 player2 = [300, 150, 25, 25]
 vel2 = [0, 0]
 player2_speed = 8
+score = 0
 
 # make walls
 wall1 =  [300, 275, 200, 25]
@@ -170,7 +171,7 @@ while not done:
         text = font.render("You Win!", 1, GREEN)
         screen.blit(text, [400, 200])
 
-    
+    cat_player(loc1)
     # Update screen (Actually draw the picture in the window.)
     pygame.display.flip()
 
