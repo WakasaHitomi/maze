@@ -3,14 +3,14 @@ import pygame
 import intersects
 
 
-
+''' covert rects on player 1'''
 # Initialize game engine
 pygame.init()
 
 
 # Window
-WIDTH = 1600
-HEIGHT = 900
+WIDTH = 1200
+HEIGHT = 650
 SIZE = (WIDTH, HEIGHT)
 TITLE = "Cat Escape"
 screen = pygame.display.set_mode(SIZE)
@@ -33,16 +33,15 @@ GREEN = (0, 255, 0)
 cat1 = pygame.image.load('maze cat-1.png')
 
 # Make a player
-player1 = [10, 850]
+player_rect = [10, 850, 48, 48]
 vel1 = [0, 0]
 player1_speed = 8
 score = 0
 
-def cat_player(loc1):
-    x = player1[0]
-    y = player1[1]
+def cat_player(player_rect):
+    loc = player_rect[:2]
 
-    screen.blit(cat1, (x, y))
+    screen.blit(cat1, loc)
     
 
 
@@ -108,14 +107,14 @@ while not done:
 
     ''' resolve collisions horizontally '''
     for w in walls:
-        if intersects.rect_rect(player1, w):        
+        if intersects.rect_rect(player_rect, w):        
             if vel1[0] > 0:
-                player1[0] = w[0] - player1[2]
+                player_rect[0] = w[0] - player_rect[2]
             elif vel1[0] < 0:
-                player1[0] = w[0] + w[2]
+                player_rect[0] = w[0] + w[2]
 
     ''' move the player in vertical direction '''
-    player1[1] += vel1[1]
+    player_rect[1] += vel1[1]
     player2[1] += vel2[1]
     
     ''' resolve collisions vertically '''
@@ -129,19 +128,19 @@ while not done:
 
     #''' here is where you should resolve player collisions with screen edges '''
     ''' get block edges (makes collision resolution easier to read) '''
-    left = player1[0]
-    right = player1[0] + player1[2]
-    top = player1[1]
-    bottom = player1[1] + player1[3]
+    left = player_rect[0]
+    right = player_rect[0] + player_rect[2]
+    top = player_rect[1]
+    bottom = player_rect[1] + player_rect[3]
 
     ''' if the block is moved completely off of the window, reposition it on the other side '''
     if left > WIDTH:
-        player1[0] = 0 - player1[2]
+        player_rect[0] = 0 - player_rect[2]
     elif right < 0:
-        player1[0] = WIDTH
+        player_rect[0] = WIDTH
         
     if bottom < 0:
-        player1[1] = HEIGHT
+        player_rect[1] = HEIGHT
     elif top > HEIGHT:
         player1[1] = 0 - player1[3]
 
@@ -171,7 +170,7 @@ while not done:
         text = font.render("You Win!", 1, GREEN)
         screen.blit(text, [400, 200])
 
-    cat_player(loc1)
+    cat_player(player_rect)
     # Update screen (Actually draw the picture in the window.)
     pygame.display.flip()
 
