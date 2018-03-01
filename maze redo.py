@@ -33,7 +33,7 @@ GREEN = (0, 255, 0)
 cat1 = pygame.image.load('maze cat-1.png')
 
 # Make a player
-player_rect = [10, 850, 48, 48]
+player_rect = [10, 850, 40, 40]
 vel1 = [0, 0]
 player1_speed = 8
 score = 0
@@ -102,7 +102,7 @@ while not done:
         
     # Game logic (Check for collisions, update points, etc.)
     ''' move the player in horizontal direction '''
-    player1[0] += vel1[0]
+    player_rect[0] += vel1[0]
     player2[0] += vel2[0]
 
     ''' resolve collisions horizontally '''
@@ -119,11 +119,11 @@ while not done:
     
     ''' resolve collisions vertically '''
     for w in walls:
-        if intersects.rect_rect(player1, w):                    
+        if intersects.rect_rect(player_rect, w):                    
             if vel1[1] > 0:
-                player1[1] = w[1] - player1[3]
+                player_rect[1] = w[1] - player_rect[3]
             if vel1[1]< 0:
-                player1[1] = w[1] + w[3]
+                player_rect[1] = w[1] + w[3]
 
 
     #''' here is where you should resolve player collisions with screen edges '''
@@ -134,21 +134,23 @@ while not done:
     bottom = player_rect[1] + player_rect[3]
 
     ''' if the block is moved completely off of the window, reposition it on the other side '''
-    if left > WIDTH:
-        player_rect[0] = 0 - player_rect[2]
-    elif right < 0:
-        player_rect[0] = WIDTH
-        
-    if bottom < 0:
-        player_rect[1] = HEIGHT
-    elif top > HEIGHT:
-        player1[1] = 0 - player1[3]
+    if left < 0:
+        player_rect[0] = 0
+    elif right > WIDTH:
+        player_rect[0] = WIDTH - player_rect[2]
+
+    if top < 0:
+        player_rect[1] = 0
+    elif bottom > HEIGHT:
+        player_rect[1] = HEIGHT - player_rect[3]
+
+
 
 
 
 
     ''' get the coins '''
-    coins = [c for c in coins if not intersects.rect_rect(player1, c)]
+    coins = [c for c in coins if not intersects.rect_rect(player_rect, c)]
 
     if len(coins) == 0:
         win = True
@@ -157,7 +159,7 @@ while not done:
     # Drawing code (Describe the picture. It isn't actually drawn yet.)
     screen.fill(BLACK)
 
-    pygame.draw.rect(screen, WHITE, player1)
+    pygame.draw.rect(screen, BLACK, player_rect)
     
     for w in walls:
         pygame.draw.rect(screen, RED, w)
