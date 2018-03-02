@@ -32,6 +32,13 @@ GREEN = (0, 255, 0)
 #images
 cat1 = pygame.image.load('maze cat-1.png')
 
+fishy1 = pygame.image.load('fish-1.png')
+fishy2= pygame.image.load('fish-2.png')
+fishy3 = pygame.image.load('fish-3.png')
+fishy4 = pygame.image.load('fish-4.png')
+
+fishy_treat = [fishy1, fishy2, fishy3, fishy4]
+
 # Make a player
 player_rect = [10, 850, 40, 40]
 vel1 = [0, 0]
@@ -60,6 +67,8 @@ wall4 =  [75, 495, 200, 80]
 walls = [wall1, wall2, wall3, wall4]
 
 # Make coins
+
+
 coin1 = [300, 500, 25, 25]
 coin2 = [400, 200, 25, 25]
 coin3 = [150, 150, 25, 25]
@@ -67,9 +76,17 @@ coin3 = [150, 150, 25, 25]
 coins = [coin1, coin2, coin3]
 
 
+def Jeremy(coins, frame):
+    lof = coins
+
+    screen.blit(fishy_treat[frame], coins)
+    
 # Game loop
 win = False
 done = False
+
+ticks = 0
+frame = 0
 
 while not done:
     # Event processing (React to key presses, mouse clicks, etc.)
@@ -105,6 +122,12 @@ while not done:
     player_rect[0] += vel1[0]
     player2[0] += vel2[0]
 
+    ticks += 1
+    if ticks%20 == 0:
+        frame += 1
+        if frame > 4:
+            frame = 0
+            
     ''' resolve collisions horizontally '''
     for w in walls:
         if intersects.rect_rect(player_rect, w):        
@@ -112,6 +135,8 @@ while not done:
                 player_rect[0] = w[0] - player_rect[2]
             elif vel1[0] < 0:
                 player_rect[0] = w[0] + w[2]
+
+                
 
     ''' move the player in vertical direction '''
     player_rect[1] += vel1[1]
@@ -173,6 +198,8 @@ while not done:
         screen.blit(text, [400, 200])
 
     cat_player(player_rect)
+    Jeremy(coins, frame)
+    
     # Update screen (Actually draw the picture in the window.)
     pygame.display.flip()
 
