@@ -69,15 +69,25 @@ walls = [wall1, wall2, wall3, wall4]
 # Make coins
 
 
-coin1 = [300, 500, 25, 25]
-coin2 = [400, 200, 25, 25]
-coin3 = [150, 150, 25, 25]
-
-coins = [coin1, coin2, coin3]
 
 
-def Jeremy(coins, frame):
-    lof = coins
+
+
+'''fixing coin fish treat shift'''
+
+
+
+
+coin = [x, y]
+
+coin[1] = [300, 500, 25, 25]
+coin[2] = [400, 200, 25, 25]
+coin[3] = [150, 150, 25, 25]
+
+
+
+def Jeremy(coin, frame):
+    lof = coin[:3]
 
     screen.blit(fishy_treat[frame], coins)
     
@@ -190,15 +200,14 @@ while not done:
         pygame.draw.rect(screen, RED, w)
 
     for c in coins:
-        pygame.draw.rect(screen, YELLOW, c)
+       screen.blit(fishy_treat[frame])
         
     if win:
         font = pygame.font.Font(None, 48)
-        text = font.render("You Win!", 1, GREEN)
+        text = font.render("You Won!", 1, GREEN)
         screen.blit(text, [400, 200])
 
     cat_player(player_rect)
-    Jeremy(coins, frame)
     
     # Update screen (Actually draw the picture in the window.)
     pygame.display.flip()
