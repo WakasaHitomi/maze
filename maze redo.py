@@ -78,18 +78,17 @@ walls = [wall1, wall2, wall3, wall4]
 
 
 
-coin = [x, y]
 
-coin[1] = [300, 500, 25, 25]
-coin[2] = [400, 200, 25, 25]
-coin[3] = [150, 150, 25, 25]
+coin1 = [300, 500, 25, 25]
+coin2 = [400, 200, 25, 25]
+coin3 = [150, 150, 25, 25]
 
+coins =  [coin1, coin2, coin3]
 
+'''def Jeremy(coins, frame):
+    lof = coins
 
-def Jeremy(coin, frame):
-    lof = coin[:3]
-
-    screen.blit(fishy_treat[frame], coins)
+    screen.blit(fishy_treat[frame], lof)'''
     
 # Game loop
 win = False
@@ -200,7 +199,7 @@ while not done:
         pygame.draw.rect(screen, RED, w)
 
     for c in coins:
-       screen.blit(fishy_treat[frame])
+       pygame.draw.rect(screen, YELLOW, c)
         
     if win:
         font = pygame.font.Font(None, 48)
