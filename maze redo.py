@@ -1,3 +1,4 @@
+
 # Imports
 import pygame
 import intersects
@@ -73,7 +74,7 @@ walls = [wall1, wall2, wall3, wall4]
 
 
 
-'''fixing coin fish treat shift'''
+'''fixing coin fish treat shift....... try doing it backwards, like making the picture into a coin...? like the imge asa function and the coin being called only for location,but sameprocessing of a coin'''
 
 
 
@@ -85,10 +86,10 @@ coin3 = [150, 150, 25, 25]
 
 coins =  [coin1, coin2, coin3]
 
-'''def Jeremy(coins, frame):
-    lof = coins
+def Jeremy(coins, frame):
+    loc = (x, y)
 
-    screen.blit(fishy_treat[frame], lof)'''
+    screen.blit(fishy_treat[frame], loc)
     
 # Game loop
 win = False
@@ -199,7 +200,7 @@ while not done:
         pygame.draw.rect(screen, RED, w)
 
     for c in coins:
-       pygame.draw.rect(screen, YELLOW, c)
+       Jeremy(coins, frame)
         
     if win:
         font = pygame.font.Font(None, 48)
@@ -207,6 +208,7 @@ while not done:
         screen.blit(text, [400, 200])
 
     cat_player(player_rect)
+    Jeremy(coins, frame)
     
     # Update screen (Actually draw the picture in the window.)
     pygame.display.flip()
