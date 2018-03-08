@@ -46,18 +46,25 @@ vel1 = [0, 0]
 player1_speed = 8
 score = 0
 
-def cat_player(player_rect):
+def cat_player1(player_rect):
     loc = player_rect[:2]
 
     screen.blit(cat1, loc)
+
     
 
 
-
-player2 = [300, 150, 25, 25]
+player2_rect = [300, 150, 40, 40]
 vel2 = [0, 0]
 player2_speed = 8
 score = 0
+
+
+def cat_player2(player2_rect):
+    loc = plauer2_rect[:2]
+
+    screen.blit(cat1, loc)
+
 
 # make walls
 wall1 =  [300, 275, 200, 25]
@@ -75,21 +82,24 @@ walls = [wall1, wall2, wall3, wall4]
 
 
 '''fixing coin fish treat shift....... try doing it backwards, like making the picture into a coin...? like the imge asa function and the coin being called only for location,but sameprocessing of a coin'''
+#picture into a coin
+
+fish[0] = [300, 300, 25, 25]
+fish[1] = [380, 489, 25, 25]
+fish[3] = [450, 300, 25, 25]
+
+fishes =
 
 
-
-
-
-coin1 = [300, 500, 25, 25]
-coin2 = [400, 200, 25, 25]
-coin3 = [150, 150, 25, 25]
-
-coins =  [coin1, coin2, coin3]
-
-def Jeremy(coins, frame):
+def Jeremy(loc, frame):
     loc = (x, y)
 
     screen.blit(fishy_treat[frame], loc)
+
+
+Jeremy(350, 280)
+
+
     
 # Game loop
 win = False
@@ -125,12 +135,36 @@ while not done:
         vel1[1] = player1_speed
     else:
         vel1[1] = 0
+
+
+
+
+
+
+    up2 = pressed[pygame.K_UP]
+    down2 = pressed[pygame.K_DOWN]
+    left2 = pressed[pygame.K_LEFT]
+    right2 = pressed[pygame.K_RIGHT]
+
+    if left2:
+        vel2[0] = -player2_speed
+    elif right2:
+        vel2[0] = player2_speed
+    else:
+        vel2[0] = 0
+
+    if up2:
+        vel2[1] = -player2_speed
+    elif down2:
+        vel2[1] = player2_speed
+    else:
+        vel2[1] = 0
         
         
     # Game logic (Check for collisions, update points, etc.)
     ''' move the player in horizontal direction '''
     player_rect[0] += vel1[0]
-    player2[0] += vel2[0]
+    player2_rect[0] += vel2[0]
 
     ticks += 1
     if ticks%20 == 0:
@@ -150,15 +184,23 @@ while not done:
 
     ''' move the player in vertical direction '''
     player_rect[1] += vel1[1]
-    player2[1] += vel2[1]
+    player2_rect[1] += vel2[1]
     
     ''' resolve collisions vertically '''
     for w in walls:
         if intersects.rect_rect(player_rect, w):                    
             if vel1[1] > 0:
                 player_rect[1] = w[1] - player_rect[3]
-            if vel1[1]< 0:
+            elif vel1[1]< 0:
                 player_rect[1] = w[1] + w[3]
+
+
+                
+        if intersects.rect_rect(player2_rect, w):
+            if vel2[1] > 0:
+                player2_rect[1] = w[1] - player2_rect[3]
+            elif vel2[1]< 0:
+                player2_rect[1] = w[1] + w[3]
 
 
     #''' here is where you should resolve player collisions with screen edges '''
@@ -167,7 +209,11 @@ while not done:
     right = player_rect[0] + player_rect[2]
     top = player_rect[1]
     bottom = player_rect[1] + player_rect[3]
-
+    
+    left = player2_rect[0]
+    right = player2_rect[0] + player2_rect[2]
+    top = player2_rect[1]
+    bottom = player2_rect[1] + player2_rect[3]
     ''' if the block is moved completely off of the window, reposition it on the other side '''
     if left < 0:
         player_rect[0] = 0
@@ -180,35 +226,47 @@ while not done:
         player_rect[1] = HEIGHT - player_rect[3]
 
 
+    if left < 0:
+        player2_rect[0] = 0
+    elif right > WIDTH:
+        player2_rect[0] = WIDTH - player2_rect[2]
+
+    if top < 0:
+        player2_rect[1] = 0
+    elif bottom > HEIGHT:
+        player2_rect[1] = HEIGHT - player2_rect[3]
+
 
 
 
 
     ''' get the coins '''
-    coins = [c for c in coins if not intersects.rect_rect(player_rect, c)]
+    '''  coins = [c for c in coins if not intersects.rect_rect(player_rect, c)]
 
     if len(coins) == 0:
-        win = True
+        win = True'''
 
         
     # Drawing code (Describe the picture. It isn't actually drawn yet.)
     screen.fill(BLACK)
 
     pygame.draw.rect(screen, BLACK, player_rect)
+    pygame.draw.rect(screen, BLACK, player2_rect)
     
     for w in walls:
         pygame.draw.rect(screen, RED, w)
 
-    for c in coins:
-       Jeremy(coins, frame)
+    '''for c in coins:
+       Jeremy(loc, frame)'''
         
     if win:
         font = pygame.font.Font(None, 48)
         text = font.render("You Won!", 1, GREEN)
         screen.blit(text, [400, 200])
 
-    cat_player(player_rect)
-    Jeremy(coins, frame)
+    cat_player1(player_rect)
+    cat_player2(player2_rect)
+    Jeremy((340, 200), frame)
     
     # Update screen (Actually draw the picture in the window.)
     pygame.display.flip()
