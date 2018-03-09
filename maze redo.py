@@ -33,6 +33,8 @@ GREEN = (0, 255, 0)
 #images
 cat1 = pygame.image.load('maze cat-1.png')
 
+cat2 = pygame.image.load('maze cat-1.png')
+
 fishy1 = pygame.image.load('fish-1.png')
 fishy2= pygame.image.load('fish-2.png')
 fishy3 = pygame.image.load('fish-3.png')
@@ -41,7 +43,7 @@ fishy4 = pygame.image.load('fish-4.png')
 fishy_treat = [fishy1, fishy2, fishy3, fishy4]
 
 # Make a player
-player_rect = [10, 850, 40, 40]
+player_rect = [10, 150, 40, 40]
 vel1 = [0, 0]
 player1_speed = 8
 score = 0
@@ -61,9 +63,9 @@ score = 0
 
 
 def cat_player2(player2_rect):
-    loc = plauer2_rect[:2]
+    loc2 = player2_rect[:2]
 
-    screen.blit(cat1, loc)
+    screen.blit(cat2, loc2)
 
 
 # make walls
@@ -84,20 +86,30 @@ walls = [wall1, wall2, wall3, wall4]
 '''fixing coin fish treat shift....... try doing it backwards, like making the picture into a coin...? like the imge asa function and the coin being called only for location,but sameprocessing of a coin'''
 #picture into a coin
 
-fish[0] = [300, 300, 25, 25]
-fish[1] = [380, 489, 25, 25]
-fish[3] = [450, 300, 25, 25]
+'''fish1 = [300, 300]
+fish2 = [380, 489]
+fish3 = [450, 300]
 
-fishes =
-
-
-def Jeremy(loc, frame):
-    loc = (x, y)
-
-    screen.blit(fishy_treat[frame], loc)
+fishes = [fish1, fish2, fish3]
 
 
-Jeremy(350, 280)
+def Jeremy(loc3, frame):
+    loc3 = fishes
+
+    screen.blit(fishy_treat[frame], loc3)'''
+
+#New test code for coins
+
+fish_rect1 = [300, 300, 25, 25]
+fish_rect2 = [300, 350, 25, 25]
+
+fishes = [fish_rect1, fish_rect2]
+
+def Jeremy(loc3, frame):
+    loc3 = fish_rect1
+
+    screen.blit(fishy_treat[frame], loc3)
+
 
 
     
@@ -141,10 +153,10 @@ while not done:
 
 
 
-    up2 = pressed[pygame.K_UP]
-    down2 = pressed[pygame.K_DOWN]
-    left2 = pressed[pygame.K_LEFT]
-    right2 = pressed[pygame.K_RIGHT]
+    up2 = pressed[pygame.K_w]
+    down2 = pressed[pygame.K_s]
+    left2 = pressed[pygame.K_a]
+    right2 = pressed[pygame.K_d]
 
     if left2:
         vel2[0] = -player2_speed
@@ -180,7 +192,13 @@ while not done:
             elif vel1[0] < 0:
                 player_rect[0] = w[0] + w[2]
 
-                
+
+
+        if intersects.rect_rect(player2_rect, w):        
+            if vel2[0] > 0:
+                player_rect2[0] = w[0] - player2_rect[2]
+            elif vel2[0] < 0:
+                player2_rect[0] = w[0] + w[2]
 
     ''' move the player in vertical direction '''
     player_rect[1] += vel1[1]
@@ -210,10 +228,10 @@ while not done:
     top = player_rect[1]
     bottom = player_rect[1] + player_rect[3]
     
-    left = player2_rect[0]
-    right = player2_rect[0] + player2_rect[2]
-    top = player2_rect[1]
-    bottom = player2_rect[1] + player2_rect[3]
+    left2 = player2_rect[0]
+    right2 = player2_rect[0] + player2_rect[2]
+    top2 = player2_rect[1]
+    bottom2 = player2_rect[1] + player2_rect[3]
     ''' if the block is moved completely off of the window, reposition it on the other side '''
     if left < 0:
         player_rect[0] = 0
@@ -226,14 +244,16 @@ while not done:
         player_rect[1] = HEIGHT - player_rect[3]
 
 
-    if left < 0:
+
+
+    if left2 < 0:
         player2_rect[0] = 0
-    elif right > WIDTH:
+    elif right2 > WIDTH:
         player2_rect[0] = WIDTH - player2_rect[2]
 
-    if top < 0:
+    if top2 < 0:
         player2_rect[1] = 0
-    elif bottom > HEIGHT:
+    elif bottom2 > HEIGHT:
         player2_rect[1] = HEIGHT - player2_rect[3]
 
 
@@ -241,9 +261,9 @@ while not done:
 
 
     ''' get the coins '''
-    '''  coins = [c for c in coins if not intersects.rect_rect(player_rect, c)]
+    '''  fishes = [f for f in fishes if not intersects.rect_rect(player_rect, f)]
 
-    if len(coins) == 0:
+    if len(fishes) == 0:
         win = True'''
 
         
@@ -252,6 +272,7 @@ while not done:
 
     pygame.draw.rect(screen, BLACK, player_rect)
     pygame.draw.rect(screen, BLACK, player2_rect)
+    pygame.draw.rect(screen, WHITE, fish_rect1)
     
     for w in walls:
         pygame.draw.rect(screen, RED, w)
@@ -266,7 +287,7 @@ while not done:
 
     cat_player1(player_rect)
     cat_player2(player2_rect)
-    Jeremy((340, 200), frame)
+    Jeremy(loc3, frame)
     
     # Update screen (Actually draw the picture in the window.)
     pygame.display.flip()
