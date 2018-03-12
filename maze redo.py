@@ -30,6 +30,8 @@ YELLOW = (255, 255, 0)
 GREEN = (0, 255, 0)
 
 
+
+
 #images
 cat1 = pygame.image.load('maze cat-1.png')
 
@@ -39,8 +41,12 @@ fishy1 = pygame.image.load('fish-1.png')
 fishy2= pygame.image.load('fish-2.png')
 fishy3 = pygame.image.load('fish-3.png')
 fishy4 = pygame.image.load('fish-4.png')
+fishy5= pygame.image.load('fish-2.png')
+fishy6 = pygame.image.load('fish-3.png')
+fishy7 = pygame.image.load('fish-4.png')
+fishy8 = pygame.image.load('fish-1.png')
 
-fishy_treat = [fishy1, fishy2, fishy3, fishy4]
+fishy_treat = [fishy1, fishy2, fishy3, fishy4, fishy5, fishy6, fishy7, fishy8]
 
 # Make a player
 player_rect = [10, 150, 40, 40]
@@ -105,12 +111,43 @@ fish_rect2 = [300, 350, 25, 25]
 
 fishes = [fish_rect1, fish_rect2]
 
-def Jeremy(loc3, frame):
-    loc3 = fish_rect1
+def Jeremy(frame):
+    loc = fish_rect1
 
-    screen.blit(fishy_treat[frame], loc3)
+    screen.blit(fishy_treat[frame], loc)
+
+# Fonts
+MY_FONT = pygame.font.Font(None, 50)
 
 
+# stages
+START = 0
+PLAYING = 1
+END = 2
+
+
+def setup():
+    global block_pos, block_vel, size, stage, time_remaining, ticks
+    
+    block_pos = [375, 275]
+    block_vel = [0, 0]
+    size = 50
+
+    stage = START
+    time_remaining = 10
+    ticks = 0
+
+# Game loop# Fonts
+MY_FONT = pygame.font.Font(None, 50)
+
+
+# stages
+START = 0
+PLAYING = 1
+END = 2
+
+setup()
+done = False
 
     
 # Game loop
@@ -129,6 +166,14 @@ while not done:
 
     pressed = pygame.key.get_pressed()
 
+    
+
+    PLAYING = pressed[pygame.K_SPACE]
+
+    if stage == START:
+        stage = PLAYING
+
+    
     up1 = pressed[pygame.K_UP]
     down1 = pressed[pygame.K_DOWN]
     left1 = pressed[pygame.K_LEFT]
@@ -181,7 +226,7 @@ while not done:
     ticks += 1
     if ticks%20 == 0:
         frame += 1
-        if frame > 4:
+        if frame > 7:
             frame = 0
             
     ''' resolve collisions horizontally '''
@@ -272,13 +317,13 @@ while not done:
 
     pygame.draw.rect(screen, BLACK, player_rect)
     pygame.draw.rect(screen, BLACK, player2_rect)
-    pygame.draw.rect(screen, WHITE, fish_rect1)
+    pygame.draw.rect(screen, BLACK, fish_rect1)
     
     for w in walls:
         pygame.draw.rect(screen, RED, w)
 
     '''for c in coins:
-       Jeremy(loc, frame)'''
+       Jeremy(c, frame)'''
         
     if win:
         font = pygame.font.Font(None, 48)
@@ -287,7 +332,7 @@ while not done:
 
     cat_player1(player_rect)
     cat_player2(player2_rect)
-    Jeremy(loc3, frame)
+    Jeremy(frame)
     
     # Update screen (Actually draw the picture in the window.)
     pygame.display.flip()
