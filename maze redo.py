@@ -154,7 +154,7 @@ done = False
 win = False
 done = False
 
-ticks = 0
+tick = 0
 frame = 0
 
 while not done:
@@ -164,67 +164,82 @@ while not done:
         if event.type == pygame.QUIT:
             done = True
 
-    pressed = pygame.key.get_pressed()
-
-    
-
-    PLAYING = pressed[pygame.K_SPACE]
-
-    if stage == START:
-        stage = PLAYING
-
-    
-    up1 = pressed[pygame.K_UP]
-    down1 = pressed[pygame.K_DOWN]
-    left1 = pressed[pygame.K_LEFT]
-    right1 = pressed[pygame.K_RIGHT]
-
-    if left1:
-        vel1[0] = -player1_speed
-    elif right1:
-        vel1[0] = player1_speed
-    else:
-        vel1[0] = 0
-
-    if up1:
-        vel1[1] = -player1_speed
-    elif down1:
-        vel1[1] = player1_speed
-    else:
-        vel1[1] = 0
 
 
+        elif event.type == pygame.KEYDOWN:
+            if stage == START:
+                if event.key == pygame.K_SPACE:
+                    stage = PLAYING
+                    
+            elif stage == PLAYING:
+                
+                pressed = pygame.key.get_pressed()
 
+                up1 = pressed[pygame.K_UP]
+                down1 = pressed[pygame.K_DOWN]
+                left1 = pressed[pygame.K_LEFT]
+                right1 = pressed[pygame.K_RIGHT]
+
+                if left1:
+                    vel1[0] = -player1_speed
+                elif right1:
+                    vel1[0] = player1_speed
+                else:
+                    vel1[0] = 0
+
+                if up1:
+                    vel1[1] = -player1_speed
+                elif down1:
+                    vel1[1] = player1_speed
+                else:
+                    vel1[1] = 0
 
 
 
-    up2 = pressed[pygame.K_w]
-    down2 = pressed[pygame.K_s]
-    left2 = pressed[pygame.K_a]
-    right2 = pressed[pygame.K_d]
 
-    if left2:
-        vel2[0] = -player2_speed
-    elif right2:
-        vel2[0] = player2_speed
-    else:
-        vel2[0] = 0
 
-    if up2:
-        vel2[1] = -player2_speed
-    elif down2:
-        vel2[1] = player2_speed
-    else:
-        vel2[1] = 0
+
+                up2 = pressed[pygame.K_w]
+                down2 = pressed[pygame.K_s]
+                left2 = pressed[pygame.K_a]
+                right2 = pressed[pygame.K_d]
+
+                if left2:
+                    vel2[0] = -player2_speed
+                elif right2:
+                    vel2[0] = player2_speed
+                else:
+                    vel2[0] = 0
+
+                if up2:
+                    vel2[1] = -player2_speed
+                elif down2:
+                    vel2[1] = player2_speed
+                else:
+                    vel2[1] = 0
+
+
+            elif stage == END:
+                if event.key == pygame.K_SPACE:
+                    setup()
         
         
     # Game logic (Check for collisions, update points, etc.)
+    '''timer'''
+    if stage == PLAYING:
+        ticks += 1
+
+        if ticks % refresh_rate == 0:
+            time_remaining -= 1
+
+        if time_remaining == 0:
+            stage = END
     ''' move the player in horizontal direction '''
     player_rect[0] += vel1[0]
     player2_rect[0] += vel2[0]
 
-    ticks += 1
-    if ticks%20 == 0:
+    tick += 1
+    if tick%20 == 0:
         frame += 1
         if frame > 7:
             frame = 0
@@ -315,9 +330,30 @@ while not done:
     # Drawing code (Describe the picture. It isn't actually drawn yet.)
     screen.fill(BLACK)
 
+    ''' timer text '''
+    timer_text = MY_FONT.render(str(time_remaining), True, WHITE)
+    screen.blit(timer_text, [50, 50])
+
+
     pygame.draw.rect(screen, BLACK, player_rect)
     pygame.draw.rect(screen, BLACK, player2_rect)
     pygame.draw.rect(screen, BLACK, fish_rect1)
+
+    ''' begin/end game text '''
+    if stage == START:
+        text1 = MY_FONT.render("Block", True, WHITE)
+        text2 = MY_FONT.render("(Press SPACE to play.)", True, WHITE)
+        screen.blit(text1, [350, 150])
+        screen.blit(text2, [225, 200])
+    elif stage == END:
+        text1 = MY_FONT.render("Game Over", True, WHITE)
+        text2 = MY_FONT.render("(Press SPACE to restart.)", True, WHITE)
+        screen.blit(text1, [310, 150])
+        screen.blit(text2, [210, 200])
+
+
+
+        
     
     for w in walls:
         pygame.draw.rect(screen, RED, w)
