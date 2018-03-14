@@ -44,7 +44,7 @@ fishy4 = pygame.image.load('fish-4.png')
 fishy5= pygame.image.load('fish-2.png')
 fishy6 = pygame.image.load('fish-3.png')
 fishy7 = pygame.image.load('fish-4.png')
-fishy8 = pygame.image.load('fish-1.png')
+fishy8 = pygame.image.load('fish-2.png')
 
 fishy_treat = [fishy1, fishy2, fishy3, fishy4, fishy5, fishy6, fishy7, fishy8]
 
@@ -92,29 +92,39 @@ walls = [wall1, wall2, wall3, wall4]
 '''fixing coin fish treat shift....... try doing it backwards, like making the picture into a coin...? like the imge asa function and the coin being called only for location,but sameprocessing of a coin'''
 #picture into a coin
 
-'''fish1 = [300, 300]
-fish2 = [380, 489]
-fish3 = [450, 300]
 
-fishes = [fish1, fish2, fish3]
-
-
-def Jeremy(loc3, frame):
-    loc3 = fishes
-
-    screen.blit(fishy_treat[frame], loc3)'''
 
 #New test code for coins
 
 fish_rect1 = [300, 300, 25, 25]
 fish_rect2 = [300, 350, 25, 25]
+fish_rect3 = [375, 350, 25, 25]
+fish_rect4 = [375, 300, 25, 25]
 
-fishes = [fish_rect1, fish_rect2]
+fishes = [fish_rect1, fish_rect2,fish_rect3, fish_rect4]
 
 def Jeremy(frame):
     loc = fish_rect1
 
     screen.blit(fishy_treat[frame], loc)
+
+def Jeremy1(frame):
+    loc = fish_rect2
+
+    screen.blit(fishy_treat[frame], loc)
+
+def Jeremy2(frame):
+    loc = fish_rect3
+
+    screen.blit(fishy_treat[frame], loc)
+
+
+def Jeremy3(frame):
+    loc = fish_rect4
+
+    screen.blit(fishy_treat[frame], loc)
+    
+    
 
 # Fonts
 MY_FONT = pygame.font.Font(None, 50)
@@ -134,7 +144,7 @@ def setup():
     size = 50
 
     stage = START
-    time_remaining = 10
+    time_remaining = 90
     ticks = 0
 
 # Game loop# Fonts
@@ -256,7 +266,7 @@ while not done:
 
         if intersects.rect_rect(player2_rect, w):        
             if vel2[0] > 0:
-                player_rect2[0] = w[0] - player2_rect[2]
+                player2_rect[0] = w[0] - player2_rect[2]
             elif vel2[0] < 0:
                 player2_rect[0] = w[0] + w[2]
 
@@ -369,6 +379,9 @@ while not done:
     cat_player1(player_rect)
     cat_player2(player2_rect)
     Jeremy(frame)
+    Jeremy1(frame)
+    Jeremy2(frame)
+    Jeremy3(frame)
     
     # Update screen (Actually draw the picture in the window.)
     pygame.display.flip()
