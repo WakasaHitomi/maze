@@ -79,8 +79,9 @@ wall1 =  [300, 275, 200, 25]
 wall2 =  [400, 435, 200, 25]
 wall3 =  [100, 100, 25, 200]
 wall4 =  [75, 495, 200, 80]
+wall5 = [0, 580, 200, 20] 
 
-walls = [wall1, wall2, wall3, wall4]
+walls = [wall1, wall2, wall3, wall4, wall5]
 
 # Make coins
 
@@ -101,7 +102,7 @@ fish_rect2 = [300, 350, 25, 25]
 fish_rect3 = [375, 350, 25, 25]
 fish_rect4 = [375, 300, 25, 25]
 
-fishes = [fish_rect1, fish_rect2,fish_rect3, fish_rect4]
+coins = [fish_rect1, fish_rect2, fish_rect3, fish_rect4]
 
 def Jeremy(frame):
     loc = fish_rect1
@@ -125,6 +126,9 @@ def Jeremy3(frame):
     screen.blit(fishy_treat[frame], loc)
     
     
+
+blacked = [Jeremy, Jeremy1, Jeremy2, Jeremy3]
+
 
 # Fonts
 MY_FONT = pygame.font.Font(None, 50)
@@ -331,10 +335,14 @@ while not done:
 
 
     ''' get the coins '''
-    '''  fishes = [f for f in fishes if not intersects.rect_rect(player_rect, f)]
+    coins = [c for c in coins if not intersects.rect_rect(player_rect, c)]
 
-    if len(fishes) == 0:
-        win = True'''
+    coins = [c for c in coins if not intersects.rect_rect(player2_rect, c)]
+
+    if len(coins) == 0:
+        win = True
+
+        
 
         
     # Drawing code (Describe the picture. It isn't actually drawn yet.)
@@ -368,8 +376,8 @@ while not done:
     for w in walls:
         pygame.draw.rect(screen, RED, w)
 
-    '''for c in coins:
-       Jeremy(c, frame)'''
+    for c in coins:
+       pygame.draw.rect(screen, WHITE, c)
         
     if win:
         font = pygame.font.Font(None, 48)
