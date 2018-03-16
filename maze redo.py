@@ -28,6 +28,8 @@ WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
 YELLOW = (255, 255, 0)
 GREEN = (0, 255, 0)
+BGGREEN = (1, 114, 6)
+
 
 
 
@@ -36,6 +38,10 @@ GREEN = (0, 255, 0)
 cat1 = pygame.image.load('maze cat-1.png')
 
 cat2 = pygame.image.load('maze cat-1.png')
+
+cat3 = pygame.image.load('maze cat-1.png')
+
+
 
 fishy1 = pygame.image.load('fish-1.png')
 fishy2= pygame.image.load('fish-2.png')
@@ -73,6 +79,18 @@ def cat_player2(player2_rect):
 
     screen.blit(cat2, loc2)
 
+
+
+player3_rect = [300, 150, 40, 40]
+vel3 = [0, 0]
+player3_speed = 8
+score = 0
+
+
+def cat_player3(player3_rect):
+    loc3 = player3_rect[:2]
+
+    screen.blit(cat3, loc3)
 
 # make walls
 wall1 =  [300, 275, 200, 25]
@@ -152,7 +170,9 @@ def setup():
     ticks = 0
 
 # Game loop# Fonts
-MY_FONT = pygame.font.Font(None, 50)
+MY_FONT = pygame.font.Font(None, 90)
+
+MY_FONT2 = pygame.font.Font(None, 50)
 
 
 # stages
@@ -233,6 +253,27 @@ while not done:
                     vel2[1] = 0
 
 
+
+                up3 = pressed[pygame.K_u]
+                down3 = pressed[pygame.K_j]
+                left3 = pressed[pygame.K_h]
+                right3 = pressed[pygame.K_k]
+
+                if left3:
+                    vel3[0] = -player3_speed
+                elif right3:
+                    vel3[0] = player3_speed
+                else:
+                    vel3[0] = 0
+
+                if up3:
+                    vel3[1] = -player3_speed
+                elif down3:
+                    vel3[1] = player3_speed
+                else:
+                    vel3[1] = 0
+
+
             elif stage == END:
                 if event.key == pygame.K_SPACE:
                     setup()
@@ -251,6 +292,7 @@ while not done:
     ''' move the player in horizontal direction '''
     player_rect[0] += vel1[0]
     player2_rect[0] += vel2[0]
+    player3_rect[0] += vel3[0]
 
     tick += 1
     if tick%20 == 0:
@@ -274,9 +316,21 @@ while not done:
             elif vel2[0] < 0:
                 player2_rect[0] = w[0] + w[2]
 
+
+
+
+        if intersects.rect_rect(player3_rect, w):        
+            if vel3[0] > 0:
+                player3_rect[0] = w[0] - player3_rect[2]
+            elif vel3[0] < 0:
+                player3_rect[0] = w[0] + w[2]
+
+
+
     ''' move the player in vertical direction '''
     player_rect[1] += vel1[1]
     player2_rect[1] += vel2[1]
+    player3_rect[1] += vel3[1]
     
     ''' resolve collisions vertically '''
     for w in walls:
@@ -295,6 +349,14 @@ while not done:
                 player2_rect[1] = w[1] + w[3]
 
 
+
+        if intersects.rect_rect(player3_rect, w):
+            if vel3[1] > 0:
+                player3_rect[1] = w[1] - player3_rect[3]
+            elif vel3[1]< 0:
+                player3_rect[1] = w[1] + w[3]
+
+
     #''' here is where you should resolve player collisions with screen edges '''
     ''' get block edges (makes collision resolution easier to read) '''
     left = player_rect[0]
@@ -306,6 +368,11 @@ while not done:
     right2 = player2_rect[0] + player2_rect[2]
     top2 = player2_rect[1]
     bottom2 = player2_rect[1] + player2_rect[3]
+
+    left3 = player3_rect[0]
+    right3 = player3_rect[0] + player3_rect[2]
+    top3 = player3_rect[1]
+    bottom3 = player3_rect[1] + player3_rect[3]
     ''' if the block is moved completely off of the window, reposition it on the other side '''
     if left < 0:
         player_rect[0] = 0
@@ -333,11 +400,27 @@ while not done:
 
 
 
+    if left3 < 0:
+        player3_rect[0] = 0
+    elif right3 > WIDTH:
+        player3_rect[0] = WIDTH - player3_rect[2]
+
+    if top3 < 0:
+        player3_rect[1] = 0
+    elif bottom3 > HEIGHT:
+        player3_rect[1] = HEIGHT - player3_rect[3]
+
+
+
+
+
 
     ''' get the coins '''
     coins = [c for c in coins if not intersects.rect_rect(player_rect, c)]
 
     coins = [c for c in coins if not intersects.rect_rect(player2_rect, c)]
+
+    coins = [c for c in coins if not intersects.rect_rect(player3_rect, c)]
 
     if len(coins) == 0:
         win = True
@@ -346,7 +429,7 @@ while not done:
 
         
     # Drawing code (Describe the picture. It isn't actually drawn yet.)
-    screen.fill(BLACK)
+    screen.fill(BGGREEN)
 
     ''' timer text '''
     timer_text = MY_FONT.render(str(time_remaining), True, WHITE)
@@ -355,17 +438,18 @@ while not done:
 
     pygame.draw.rect(screen, BLACK, player_rect)
     pygame.draw.rect(screen, BLACK, player2_rect)
-    pygame.draw.rect(screen, BLACK, fish_rect1)
+    pygame.draw.rect(screen, BLACK, player3_rect)
+
 
     ''' begin/end game text '''
     if stage == START:
-        text1 = MY_FONT.render("Block", True, WHITE)
-        text2 = MY_FONT.render("(Press SPACE to play.)", True, WHITE)
-        screen.blit(text1, [350, 150])
-        screen.blit(text2, [225, 200])
+        text1 = MY_FONT.render("Catastrophe", True, WHITE)
+        text2 = MY_FONT2.render("(Press SPACE to play.)", True, BLACK)
+        screen.blit(text1, [420, 150])
+        screen.blit(text2, [420, 350])
     elif stage == END:
         text1 = MY_FONT.render("Game Over", True, WHITE)
-        text2 = MY_FONT.render("(Press SPACE to restart.)", True, WHITE)
+        text2 = MY_FONT2.render("(Press SPACE to restart.)", True, WHITE)
         screen.blit(text1, [310, 150])
         screen.blit(text2, [210, 200])
 
@@ -386,6 +470,7 @@ while not done:
 
     cat_player1(player_rect)
     cat_player2(player2_rect)
+    cat_player3(player3_rect)
     Jeremy(frame)
     Jeremy1(frame)
     Jeremy2(frame)
