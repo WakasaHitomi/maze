@@ -93,13 +93,19 @@ def cat_player3(player3_rect):
     screen.blit(cat3, loc3)
 
 # make walls
-wall1 =  [300, 275, 200, 25]
-wall2 =  [400, 435, 200, 25]
-wall3 =  [100, 100, 25, 200]
-wall4 =  [75, 495, 200, 80]
-wall5 = [0, 580, 200, 20] 
+wall1 =  [0, 40, 550, 20]
+wall2 =  [400, 435, 200, 20]
+wall3 =  [0, 100, 75, 20]
+wall4 =  [75, 495, 200, 20]
+wall5 = [0, 580, 200, 20]
+wall6 = [280, 580, 400, 20]
+wall7 = [300, 100, 380, 20]
+wall8 = [680, 580, 20, 80]
+wall9 = [760, 540, 80, 20]
+wall10 = [500, 80, 70, 20]
+wall11 = []
 
-walls = [wall1, wall2, wall3, wall4, wall5]
+walls = [wall1, wall2, wall3, wall4, wall5, wall6, wall7, wall8, wall9]
 
 # Make coins
 
@@ -149,7 +155,7 @@ blacked = [Jeremy, Jeremy1, Jeremy2, Jeremy3]
 
 
 # Fonts
-MY_FONT = pygame.font.Font(None, 50)
+MY_FONT3 = pygame.font.Font(None, 74)
 
 
 # stages
@@ -432,8 +438,8 @@ while not done:
     screen.fill(BGGREEN)
 
     ''' timer text '''
-    timer_text = MY_FONT.render(str(time_remaining), True, WHITE)
-    screen.blit(timer_text, [50, 50])
+    timer_text = MY_FONT3.render(str(time_remaining), True, WHITE)
+    screen.blit(timer_text, [15, 58])
 
 
     pygame.draw.rect(screen, BLACK, player_rect)
