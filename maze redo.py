@@ -102,10 +102,21 @@ wall6 = [280, 580, 400, 20]
 wall7 = [300, 100, 380, 20]
 wall8 = [680, 580, 20, 80]
 wall9 = [760, 540, 80, 20]
-wall10 = [500, 80, 70, 20]
-wall11 = []
+wall10 = [660, 60, 20, 60]
+wall11 = [600, 0, 20, 200]
+wall12 = [660, 40, 80, 20]
+wall13 = [740, 0, 20, 320]
+wall14 = [680, 170, 60, 20]
+wall15 = [675, 170, 20, 90]
+wall16 = [690, 320, 70, 20]
+wall17 = []
+wall18 = []
+wall19 = []
+wall20 = []
 
-walls = [wall1, wall2, wall3, wall4, wall5, wall6, wall7, wall8, wall9]
+
+
+walls = [wall1, wall2, wall3, wall4, wall5, wall6, wall7, wall8, wall9, wall10, wall11, wall12, wall13, wall14, wall15, wall16]
 
 # Make coins
 
@@ -447,20 +458,6 @@ while not done:
     pygame.draw.rect(screen, BLACK, player3_rect)
 
 
-    ''' begin/end game text '''
-    if stage == START:
-        text1 = MY_FONT.render("Catastrophe", True, WHITE)
-        text2 = MY_FONT2.render("(Press SPACE to play.)", True, BLACK)
-        screen.blit(text1, [420, 150])
-        screen.blit(text2, [420, 350])
-    elif stage == END:
-        text1 = MY_FONT.render("Game Over", True, WHITE)
-        text2 = MY_FONT2.render("(Press SPACE to restart.)", True, WHITE)
-        screen.blit(text1, [310, 150])
-        screen.blit(text2, [210, 200])
-
-
-
         
     
     for w in walls:
@@ -473,6 +470,21 @@ while not done:
         font = pygame.font.Font(None, 48)
         text = font.render("You Won!", 1, GREEN)
         screen.blit(text, [400, 200])
+
+
+
+    ''' begin/end game text '''
+    if stage == START:
+        text1 = MY_FONT.render("Catastrophe", True, WHITE)
+        text2 = MY_FONT2.render("(Press SPACE to play.)", True, BLACK)
+        screen.blit(text1, [420, 150])
+        screen.blit(text2, [420, 350])
+    elif stage == END:
+        text1 = MY_FONT.render("Game Over", True, WHITE)
+        text2 = MY_FONT2.render("(Press SPACE to restart.)", True, WHITE)
+        screen.blit(text1, [310, 150])
+        screen.blit(text2, [210, 200])
+        
 
     cat_player1(player_rect)
     cat_player2(player2_rect)
