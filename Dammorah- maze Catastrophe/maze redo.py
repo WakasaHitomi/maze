@@ -290,6 +290,10 @@ while not done:
                 else:
                     vel3[1] = 0
 
+                closed = pressed[pygame.K_x]
+
+                if closed:
+                    exit()
 
             elif stage == END:
                 if event.key == pygame.K_SPACE:
@@ -470,6 +474,8 @@ while not done:
         font = pygame.font.Font(None, 48)
         text = font.render("You Won!", 1, GREEN)
         screen.blit(text, [400, 200])
+
+        
 
 
 
