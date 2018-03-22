@@ -29,6 +29,7 @@ BLACK = (0, 0, 0)
 YELLOW = (255, 255, 0)
 GREEN = (0, 255, 0)
 BGGREEN = (1, 114, 6)
+LPURP = (198, 118, 252)
 
 
 
@@ -121,10 +122,6 @@ walls = [wall1, wall2, wall3, wall4, wall5, wall6, wall7, wall8, wall9, wall10, 
 # Make coins
 
 
-
-
-
-
 '''fixing coin fish treat shift....... try doing it backwards, like making the picture into a coin...? like the imge asa function and the coin being called only for location,but sameprocessing of a coin'''
 #picture into a coin
 
@@ -163,6 +160,20 @@ def Jeremy3(frame):
     
 
 blacked = [Jeremy, Jeremy1, Jeremy2, Jeremy3]
+
+
+
+
+
+
+#Teleporters
+
+tele1_rect = [700, 90, 25, 25]
+
+
+    
+
+
 
 
 # Fonts
@@ -446,7 +457,15 @@ while not done:
     if len(coins) == 0:
         win = True
 
-        
+   # ''' intersect with teleporter'''
+
+
+    '''' if x in range(680,702) and y in range(377,403):  # This is the location of the tile.
+        bif = pygame.image.load("map6.png")
+'''
+
+    if player_rect[0] in range(700, 725) or player_rect[1] in range(90, 115):
+        player_rect = [0, 1200, 25, 25]
 
         
     # Drawing code (Describe the picture. It isn't actually drawn yet.)
@@ -460,6 +479,7 @@ while not done:
     pygame.draw.rect(screen, BLACK, player_rect)
     pygame.draw.rect(screen, BLACK, player2_rect)
     pygame.draw.rect(screen, BLACK, player3_rect)
+    pygame.draw.rect(screen, LPURP, tele1_rect)
 
 
         
