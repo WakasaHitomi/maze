@@ -169,7 +169,7 @@ blacked = [Jeremy, Jeremy1, Jeremy2, Jeremy3]
 #Teleporters
 
 tele1_rect = [700, 90, 25, 25]
-
+tele2_rect = [900, 25, 25, 25]
 
     
 
@@ -194,7 +194,7 @@ def setup():
     size = 50
 
     stage = START
-    time_remaining = 90
+    time_remaining = 20
     ticks = 0
 
 # Game loop# Fonts
@@ -460,13 +460,28 @@ while not done:
    # ''' intersect with teleporter'''
 
 
-    '''' if x in range(680,702) and y in range(377,403):  # This is the location of the tile.
-        bif = pygame.image.load("map6.png")
-'''
+    '''teleporter 1'''
+    if player_rect[0] in range(700, 725) and player_rect[1] in range(90, 115):
+        player_rect = [0, 1200, 40, 40]
 
-    if player_rect[0] in range(700, 725) or player_rect[1] in range(90, 115):
-        player_rect = [0, 1200, 25, 25]
+    if player2_rect[0] in range(700, 725) and player2_rect[1] in range(90, 115):
+        player2_rect = [0, 1200, 40, 40]
 
+
+    if player3_rect[0] in range(700, 725) and player3_rect[1] in range(90, 115):
+        player3_rect = [0, 1200, 40, 40]
+
+
+    '''teleporter 2'''
+    if player_rect[0] in range(900, 915) and player_rect[1] in range(10, 35):
+        player_rect = [690, 25, 40, 40]
+
+    if player2_rect[0] in range(900, 915) and player2_rect[1] in range(10, 35):
+        player2_rect = [690, 25, 40, 40]
+
+
+    if player3_rect[0] in range(900, 915) and player3_rect[1] in range(10, 35):
+        player3_rect = [690, 25, 40, 40]
         
     # Drawing code (Describe the picture. It isn't actually drawn yet.)
     screen.fill(BGGREEN)
@@ -476,10 +491,11 @@ while not done:
     screen.blit(timer_text, [15, 58])
 
 
-    pygame.draw.rect(screen, BLACK, player_rect)
-    pygame.draw.rect(screen, BLACK, player2_rect)
-    pygame.draw.rect(screen, BLACK, player3_rect)
+    pygame.draw.rect(screen, BGGREEN, player_rect)
+    pygame.draw.rect(screen, BGGREEN, player2_rect)
+    pygame.draw.rect(screen, BGGREEN, player3_rect)
     pygame.draw.rect(screen, LPURP, tele1_rect)
+    pygame.draw.rect(screen, LPURP, tele2_rect)
 
 
         
